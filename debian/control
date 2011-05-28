@@ -1,0 +1,33 @@
+Source: nautilus-wipe
+Section: utils
+Priority: optional
+Maintainer: Tails developers <amnesia@boum.org>
+Standards-Version: 3.9.1
+Build-Depends:
+ debhelper (>= 7.0.50~),
+ gnome-doc-utils,
+ hardening-wrapper,
+ intltool,
+ libgconf2-dev,
+ libgsecuredelete-dev (>= 0.1-1~),
+ libgtk2.0-dev,
+ libnautilus-extension-dev,
+ rarian-compat
+Homepage: http://wipetools.tuxfamily.org/nautilus-wipe.html
+Vcs-Git: git://webmasters.boum.org/nautiluswipe
+
+Package: nautilus-wipe
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+ libgconf2-4,
+ libgsecuredelete0,
+ libgtk2.0-0,
+ libnautilus-extension1
+Description: Secure deletion extension for Nautilus
+ Nautilus Wipe is a Nautilus extension that adds "Securely erase" and
+ "Securely fill empty space" items to the right-click menu.
+ .
+ The progress and results of the operations are shown in a progress
+ dialog.
