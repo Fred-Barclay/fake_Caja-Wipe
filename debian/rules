@@ -2,7 +2,14 @@
 
 export DEB_BUILD_HARDENING=1
 
+PACKAGE = nautilus-wipe
+DESTDIR = $(CURDIR)/debian/$(PACKAGE)
+
 %:
 	dh $@
+
+override_dh_auto_install:
+	dh_auto_install
+	rm "$(DESTDIR)/usr/lib/nautilus/extensions-2.0/libnautilus-wipe.la"
 
 override_dh_makeshlibs:
