@@ -1,7 +1,7 @@
 Source: nautilus-wipe
 Section: utils
 Priority: optional
-Maintainer: Tails developers <tails@boum.org>
+Maintainer: Intri Geri <intrigeri+debian@boum.org>
 Standards-Version: 3.9.2
 Build-Depends:
  debhelper (>= 8.0.0),
