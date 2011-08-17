@@ -1,3 +1,11 @@
+nautilus-wipe (0.1-2~1.gbpab243d) UNRELEASED; urgency=low
+
+  ** SNAPSHOT build @ab243d7e40bde810072152c603d805dad20234ba **
+
+  * New patch: 0001-Support-GTK-3.0.patch
+
+ -- Intri Geri <intrigeri+debian@boum.org>  Wed, 17 Aug 2011 17:37:43 +0200
+
 nautilus-wipe (0.1-1) unstable; urgency=low
 
   * Initial release. (Closes: #636043)
