@@ -8,9 +8,13 @@ DESTDIR = $(CURDIR)/debian/$(PACKAGE)
 %:
 	dh $@
 
+override_dh_auto_configure:
+	dh_auto_configure -- --with-gtk3
+
 override_dh_auto_install:
 	dh_auto_install
-	rm "$(DESTDIR)/usr/lib/nautilus/extensions-2.0/libnautilus-wipe.la"
+	rm -f "$(DESTDIR)/usr/lib/nautilus/extensions-2.0/libnautilus-wipe.la"
+	rm -f "$(DESTDIR)/usr/lib/nautilus/extensions-3.0/libnautilus-wipe.la"
 
 # nautilus-wipe does not include any shared libraries
 # => let's avoid building a shlibs control file.
