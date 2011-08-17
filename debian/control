@@ -5,6 +5,7 @@ Maintainer: Intri Geri <intrigeri+debian@boum.org>
 Standards-Version: 3.9.2
 Build-Depends:
  debhelper (>= 8.0.0),
+ dh-autoreconf,
  gnome-doc-utils,
  hardening-wrapper,
  intltool,
