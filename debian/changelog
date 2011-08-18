@@ -1,10 +1,12 @@
-nautilus-wipe (0.1-2~2.gbpf8312a) UNRELEASED; urgency=low
+nautilus-wipe (0.1.1-1~1.gbpaa8404) UNRELEASED; urgency=low
 
-  * New patch: 0001-Support-GTK-3.0.patch
+  ** SNAPSHOT build @aa8404bee9bcc5d7b76da63964d7548b4179c317 **
+
+  * Imported Upstream version 0.1.1
   * Build against GTK+ and libnautilus-extension-dev >= 3.0.
   * Use dh-autoreconf.
 
- -- Intri Geri <intrigeri+debian@boum.org>  Wed, 17 Aug 2011 19:06:49 +0200
+ -- Intri Geri <intrigeri+debian@boum.org>  Thu, 18 Aug 2011 10:56:18 +0200
 
 nautilus-wipe (0.1-1) unstable; urgency=low
 
