@@ -1,3 +1,12 @@
+nautilus-wipe (0.1.1-2) unstable; urgency=low
+
+  * Release to unstable: Nautilus 3 is now in sid.
+  * Fix my name.
+  * Update Vcs-* control fields: packaging repository was moved
+    to collab-maint.
+
+ -- intrigeri <intrigeri+debian@boum.org>  Sun, 23 Oct 2011 10:05:04 +0200
+
 nautilus-wipe (0.1.1-1) experimental; urgency=low
 
   * Imported Upstream version 0.1.1
