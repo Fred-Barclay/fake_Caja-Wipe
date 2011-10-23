@@ -1,0 +1,5 @@
+# Upstream does not ship a changelog. Their Git log is pretty good, though.
+nautilus-wipe binary: no-upstream-changelog
+
+# This is my name.
+nautilus-wipe binary: maintainer-not-full-name
