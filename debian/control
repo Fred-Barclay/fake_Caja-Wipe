@@ -15,7 +15,8 @@ Build-Depends:
  libnautilus-extension-dev (>= 3.0.0),
  rarian-compat
 Homepage: http://wipetools.tuxfamily.org/nautilus-wipe.html
-Vcs-Git: git://webmasters.boum.org/nautiluswipe
+Vcs-Git: git://git.debian.org/collab-maint/nautilus-wipe.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/nautilus-wipe.git
 
 Package: nautilus-wipe
 Architecture: any
