@@ -1,7 +1,7 @@
 Source: nautilus-wipe
 Section: utils
 Priority: optional
-Maintainer: intrigeri <intrigeri+debian@boum.org>
+Maintainer: intrigeri <intrigeri@debian.org>
 Standards-Version: 3.9.2
 Build-Depends:
  debhelper (>= 8.0.0),
