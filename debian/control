@@ -6,8 +6,8 @@ Standards-Version: 3.9.2
 Build-Depends:
  debhelper (>= 8.0.0),
  dh-autoreconf,
+ dpkg-dev (>= 1.16.1.1~),
  gnome-doc-utils,
- hardening-wrapper,
  intltool,
  libgconf2-dev,
  libgsecuredelete-dev (>= 0.1-1~),
