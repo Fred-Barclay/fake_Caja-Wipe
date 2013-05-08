@@ -1,3 +1,12 @@
+nautilus-wipe (0.1.1-4) unstable; urgency=low
+
+  * Update specification URL in debian/copyright.
+  * Bump Standards-Version to 3.9.3, no change required.
+  * Add explicit versioned dependency on automake (>= 1:1.11).
+  * Migrate to debhelper compat level 9.
+
+ -- intrigeri <intrigeri@debian.org>  Wed, 08 May 2013 14:58:07 +0200
+
 nautilus-wipe (0.1.1-3) unstable; urgency=low
 
   * Add Lintian overrides for false positives.
