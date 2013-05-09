@@ -18,6 +18,9 @@ override_dh_auto_install:
 	rm -f "$(DESTDIR)/usr/lib/nautilus/extensions-2.0/libnautilus-wipe.la"
 	rm -f "$(DESTDIR)/usr/lib/nautilus/extensions-3.0/libnautilus-wipe.la"
 
+override_dh_install:
+	dh_install --fail-missing
+
 # nautilus-wipe does not include any shared libraries
 # => let's avoid building a shlibs control file.
 override_dh_makeshlibs:
