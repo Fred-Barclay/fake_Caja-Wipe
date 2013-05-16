@@ -8,7 +8,11 @@ PACKAGE = nautilus-wipe
 DESTDIR = $(CURDIR)/debian/$(PACKAGE)
 
 %:
-	dh $@ --with autoreconf
+	dh $@
+
+override_dh_auto_configure:
+	./autogen.sh
+	dh_auto_configure
 
 override_dh_auto_install:
 	dh_auto_install
