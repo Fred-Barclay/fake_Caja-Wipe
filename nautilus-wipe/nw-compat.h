@@ -19,10 +19,10 @@
  *
  */
 
-/* Contains compatibility things for old GTK and Nautilus */
+/* Contains compatibility things for old GLib, GTK and Nautilus */
 
-#ifndef NAUTILUS_WIPE_COMPAT_H
-#define NAUTILUS_WIPE_COMPAT_H
+#ifndef NW_COMPAT_H
+#define NW_COMPAT_H
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
@@ -33,6 +33,15 @@
 #include <gdk/gdk.h>
 
 G_BEGIN_DECLS
+
+
+/* GLib stuff */
+
+/* if GLib doesn't provide g_dngettext(), wrap it from dngettext() */
+#if (! GLIB_CHECK_VERSION (2, 18, 0) && ! defined (g_dngettext))
+# include <libintl.h>
+# define g_dngettext dngettext
+#endif
 
 
 /* GTK stuff */

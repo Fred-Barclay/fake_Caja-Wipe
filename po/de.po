@@ -1,76 +1,83 @@
-# French translations for nautilus-wipe package
-# Traductions françaises du paquet nautilus-wipe.
-# Copyright (C) 2010-2011  Colomban Wendling <ban@herbesfolles.org>
+# German translations for nautilus-wipe package
+# Deutsche Übersetzung für das Paket nautilus-wipe.
+# Copyright (C) 2010-2011 Christian Meyer <c2h5oh@web.de>
 # This file is distributed under the same license as the nautilus-wipe package.
-# Colomban Wendling <ban@herbesfolles.org>, 2010.
+# Christian Meyer <c2h5oh@web.de>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: nautilus-wipe 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-12 15:47+0200\n"
-"PO-Revision-Date: 2013-05-12 15:49+0200\n"
-"Last-Translator: Colomban Wendling <ban@herbesfolles.org>\n"
-"Language-Team: French\n"
-"Language: fr_FR\n"
+"PO-Revision-Date: 2013-05-12 15:51+0200\n"
+"Last-Translator: Christian Meyer <c2h5oh@web.de>\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
 
 #: ../nautilus-wipe/nw-fill-operation.c:303
 #, c-format
 msgid "Mount \"%s\" is not local"
-msgstr "Le montage « %s » n'est pas local"
+msgstr "Speicherort \"%s\" ist nicht lokal"
 
 #: ../nautilus-wipe/nw-fill-operation.c:319
 #, c-format
 msgid "No mount point found for path \"%s\""
-msgstr "Aucun point de montage trouvé pour le chemin « %s »"
+msgstr "Kein Einhängepunkt gefunden für den Pfad \"%s\""
 
 #. TRANSLATORS: singular is not really used, N is strictly >1
 #: ../nautilus-wipe/nw-extension.c:113
 #, c-format
 msgid "Are you sure you want to wipe the %u selected items?"
 msgid_plural "Are you sure you want to wipe the %u selected items?"
-msgstr[0] "Êtes-vous sûr de vouloir écraser les %u éléments sélectionnés ?"
-msgstr[1] "Êtes-vous sûr de vouloir écraser les %u éléments sélectionnés ?"
+msgstr[0] ""
+"Sind Sie sicher, dass Sie  die %u ausgewählten Elemente sicher löschen "
+"wollen?"
+msgstr[1] ""
+"Sind Sie sicher, dass Sie  die %u ausgewählten Elemente sicher löschen "
+"wollen?"
 
 #: ../nautilus-wipe/nw-extension.c:126
 #, c-format
 msgid "Are you sure you want to wipe \"%s\"?"
-msgstr "Êtes-vous sûr de vouloir écraser « %s » ?"
+msgstr "Sind Sie sicher, dass Sie  \"%s\" sicher löschen wollen?"
 
 #: ../nautilus-wipe/nw-extension.c:135
 msgid "If you wipe an item, it will not be recoverable."
-msgstr "Si vous écrasez un élément, il ne pourra plus être récupéré."
+msgstr ""
+"Wenn Sie ein Element sicher Löschen kann es nicht wieder hergestellt werden."
 
 #: ../nautilus-wipe/nw-extension.c:136
 msgid "_Wipe"
-msgstr "Éc_raser"
+msgstr "_Sicher löschen"
 
 #. progress dialog
 #: ../nautilus-wipe/nw-extension.c:139
 msgid "Wiping files..."
-msgstr "Écrasement des fichiers…"
+msgstr "Lösche Dateien…"
 
 #. failed dialog
 #: ../nautilus-wipe/nw-extension.c:143
 msgid "Wipe failed."
-msgstr "L'écrasement a échoué."
+msgstr "Sicheres Löschen ist fehlgeschlagen."
 
 #. success dialog
 #: ../nautilus-wipe/nw-extension.c:145
 msgid "Wipe successful."
-msgstr "L'écrasement a réussi."
+msgstr "Sicheres Löschen war erfolgreich."
 
 #: ../nautilus-wipe/nw-extension.c:146
 msgid "Item(s) have been successfully wiped."
-msgstr "Le(s) élément(s) ont été écrasé(s) avec succès."
+msgstr "Element(e) wurde erfolgreich gelöscht."
 
 #. TRANSLATORS: this is the last device names separator
 #: ../nautilus-wipe/nw-extension.c:174
 msgid " and "
-msgstr " et "
+msgstr " und "
 
 #. TRANSLATORS: this is the device names separator (except last)
 #: ../nautilus-wipe/nw-extension.c:177
@@ -81,7 +88,7 @@ msgstr ", "
 #: ../nautilus-wipe/nw-extension.c:181
 #, c-format
 msgid "\"%s\""
-msgstr "« %s »"
+msgstr "\"%s\""
 
 #: ../nautilus-wipe/nw-extension.c:184
 #, c-format
@@ -89,17 +96,15 @@ msgid ""
 "Are you sure you want to wipe the available diskspace on the %s partitions "
 "or devices?"
 msgstr ""
-"Êtes-vous sûr de vouloir écraser l'espace disque libre sur les partitions ou "
-"périphériques %s ?"
+"Sind sie sicher, dass Sie den verfügbaren Speicherplatz auf %s sicher "
+"löschen möchten?"
 
 #: ../nautilus-wipe/nw-extension.c:188
 #, c-format
 msgid ""
 "Available diskspace on the partitions or devices %s have been successfully "
 "wiped."
-msgstr ""
-"L'espace disque disponible sur les partitions ou périphériques %s a été "
-"écrasé avec succès."
+msgstr "Der verfügbare Speicherplatz auf %s wurde erfolgreich gelöscht."
 
 #: ../nautilus-wipe/nw-extension.c:197
 #, c-format
@@ -107,118 +112,116 @@ msgid ""
 "Are you sure you want to wipe the available diskspace on the \"%s\" "
 "partition or device?"
 msgstr ""
-"Êtes-vous sûr de vouloir écraser l'espace disque disponible sur la partition "
-"ou le périphérique « %s » ?"
+"Sind sie sicher, dass Sie den verfügbaren Speicherplatz auf \"%s\" sicher "
+"löschen möchten?"
 
 #: ../nautilus-wipe/nw-extension.c:201
 #, c-format
 msgid ""
 "Available diskspace on the partition or device \"%s\" have been successfully "
 "wiped."
-msgstr ""
-"L'espace disque disponible sur la partition ou le périphérique « %s » a été "
-"écrasé avec succès."
+msgstr "Der verfügbare Speicherplatz auf \"%s\" wurde erfolgreich gelöscht."
 
 #: ../nautilus-wipe/nw-extension.c:211
 msgid "This operation may take a while."
-msgstr "Cette opération peut prendre du temps."
+msgstr "Diese Operation könnte einige Zeit lang dauern."
 
 #: ../nautilus-wipe/nw-extension.c:212
 msgid "_Wipe available diskspace"
-msgstr "Éc_raser l'espace disque disponible"
+msgstr "_Sicherers Löschen des verfügbaren Festplattenplatzes"
 
 #. progress dialog
 #: ../nautilus-wipe/nw-extension.c:215
 msgid "Wiping available diskspace..."
-msgstr "Écrasement de l'espace disque disponible…"
+msgstr "Lösche den verfügbaren Festplattenplatz…"
 
 #. failed dialog
 #: ../nautilus-wipe/nw-extension.c:219
 msgid "Wipe failed"
-msgstr "L'écrasement a échoué"
+msgstr "Sicheres Löschen ist fehlgeschlagen"
 
 #. success dialog
 #: ../nautilus-wipe/nw-extension.c:221
 msgid "Wipe successful"
-msgstr "L'écrasement a réussi"
+msgstr "Sicheres Löschen war erfolgreich"
 
 #: ../nautilus-wipe/nw-extension.c:246
 msgid "Wipe"
-msgstr "Écraser"
+msgstr "Sicher löschen"
 
 #: ../nautilus-wipe/nw-extension.c:247
 msgid "Delete each selected item and overwrite its data"
-msgstr "Supprime chaque élément sélectionné et écraser son contenu"
+msgstr "Lösche jedes ausgewählte Element und überschreibe seine Daten"
 
 #: ../nautilus-wipe/nw-extension.c:280
 #, c-format
 msgid "File filtering failed: %s"
-msgstr "Le filtrage des fichiers a échoué : %s"
+msgstr "Dateifilterung ist fehlgeschlagen: %s"
 
 #: ../nautilus-wipe/nw-extension.c:284
 msgid "Wipe available diskspace"
-msgstr "Écraser l'espace disque disponible"
+msgstr "Sicherers Löschen des verfügbaren Festplattenplatzes"
 
 #: ../nautilus-wipe/nw-extension.c:285
 msgid "Overwrite available diskspace in this device(s)"
-msgstr ""
-"Écrase l'espace disque disponible sur le(s) périphérique(s) sélectionné(s)"
+msgstr "Überschreibe den verfügbaren Festplattenplatz auf diesem Gerät(en)"
 
 #: ../nautilus-wipe/nw-operation-manager.c:204
 msgid "_Details"
-msgstr "_Détails"
+msgstr "_Details"
 
 #: ../nautilus-wipe/nw-operation-manager.c:293
 msgid "Failed to open help"
-msgstr "Impossible d'ouvrir l'aide"
+msgstr "Kann die Hilfe nicht öffnen"
 
 #: ../nautilus-wipe/nw-operation-manager.c:366
 msgid "_Options"
-msgstr "_Options"
+msgstr "_Optionen"
 
 #: ../nautilus-wipe/nw-operation-manager.c:380
 msgid "Number of _passes:"
-msgstr "Nombre de _passes :"
+msgstr "Anzahl der _Durchgänge :"
 
 #: ../nautilus-wipe/nw-operation-manager.c:415
 msgid "(Gutmann method for old disks)"
-msgstr "(méthode de Gutmann pour les vieux disques)"
+msgstr "(Gutmann Methode für alte Festplatten)"
 
 #: ../nautilus-wipe/nw-operation-manager.c:417
 msgid "(advised for modern hard disks)"
-msgstr "(méthode recommandée pour les disques actuels)"
+msgstr "(empfohlen für moderne Festplatten)"
 
 #: ../nautilus-wipe/nw-operation-manager.c:419
 msgid "(only protects against software attacks)"
-msgstr "(protège seulement des attaques logicielles)"
+msgstr "(schützt nur vor Software Angriffen)"
 
 #: ../nautilus-wipe/nw-operation-manager.c:432
 msgid "_Fast and insecure mode (no /dev/urandom, no synchronize mode)"
 msgstr ""
-"_Mode rapide et peu sûr (pas de /dev/urandom, pas de mode de synchronisation)"
+"_Schneller und unsicherer Modus (ohne /dev/urandom, kein "
+"Synchronisationsmodus)"
 
 #: ../nautilus-wipe/nw-operation-manager.c:444
 msgid "Last pass with _zeros instead of random data"
-msgstr "Dernière passe avec des _zéros à la place de données aléatoires"
+msgstr "Letzter Durchgang mit _Nullen statt mit Zufallszahlen"
 
 #: ../nautilus-wipe/nw-operation-manager.c:471
 msgid "Are you sure you want to cancel this operation?"
-msgstr "Êtes-vous sûr de vouloir annuler cette opération ?"
+msgstr "Sind Sie sicher, dass Sie die Operation abbrechen möchten?"
 
 #: ../nautilus-wipe/nw-operation-manager.c:472
 msgid ""
 "Canceling this operation might leave some item(s) in an intermediate state."
 msgstr ""
-"Annuler cette opération peut laisser certains éléments dans un état "
-"intermédiaire."
+"Das Abbrechen dieser Operation könnten einige Elemente in einem "
+"Zwischenzustand zurücklassen."
 
 #: ../nautilus-wipe/nw-operation-manager.c:474
 msgid "Resume operation"
-msgstr "Reprendre l'opération"
+msgstr "Operation fortsetzen"
 
 #: ../nautilus-wipe/nw-operation-manager.c:475
 msgid "Cancel operation"
-msgstr "Annuler l'opération"
+msgstr "Operation abbrechen"
 
 #. Merge the error message with our. Pretty much a hack, but should be
 #. * correct and more precise.
@@ -228,5 +231,5 @@ msgid ""
 "%s. Please make sure you have the secure-delete package properly installed "
 "on your system."
 msgstr ""
-"%s. Veuillez vérifier que le paquet secure-delete est bien installé sur "
-"votre système."
+"%s. Vergewissern Sie sich bitte, ob das secure-delete Paket auf Ihrem System "
+"installiert ist."

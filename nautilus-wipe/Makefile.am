@@ -2,21 +2,25 @@ nautilus_extensiondir = $(NAUTILUS_EXTENSIONS_DIR)
 
 nautilus_extension_LTLIBRARIES = libnautilus-wipe.la
 
-noinst_PROGRAMS = test
-
 localedir = $(datadir)/locale
 
-libnautilus_wipe_la_SOURCES  = nautilus-wipe.c \
-                               nautilus-wipe.h \
-                               operation-manager.c \
-                               operation-manager.h \
-                               delete-operation.c \
-                               delete-operation.h \
-                               fill-operation.c \
-                               fill-operation.h \
-                               progress-dialog.c \
-                               progress-dialog.h \
-                               compat.h
+libnautilus_wipe_la_SOURCES  = extension.c \
+                               nw-compat.h \
+                               nw-delete-operation.c \
+                               nw-delete-operation.h \
+                               nw-extension.c \
+                               nw-extension.h \
+                               nw-fill-operation.c \
+                               nw-fill-operation.h \
+                               nw-operation.c \
+                               nw-operation.h \
+                               nw-operation-manager.c \
+                               nw-operation-manager.h \
+                               nw-path-list.c \
+                               nw-path-list.h \
+                               nw-progress-dialog.c \
+                               nw-progress-dialog.h \
+                               nw-type-utils.h
 libnautilus_wipe_la_CPPFLAGS = -DG_LOG_DOMAIN=\"$(PACKAGE)\" \
                                -DLOCALEDIR=\"$(localedir)\"
 libnautilus_wipe_la_CFLAGS   = @GLIB_CFLAGS@ \
@@ -32,13 +36,3 @@ libnautilus_wipe_la_LDFLAGS  = -module -avoid-version \
                                @LIBNAUTILUS_EXTENSION_LIBS@ \
                                @GSECUREDELETE_LIBS@ \
                                @GIO_UNIX_LIBS@
-
-test_CFLAGS  = @GLIB_CFLAGS@ \
-               @GTK_CFLAGS@
-test_LDFLAGS = @GLIB_LIBS@ \
-               @GTK_LIBS@
-# Linking against a loadable module is not portable according to libtool.
-# However, I don't really care about portability issue here because it is only a
-# test program (that might even be removed at a time).
-test_LDADD   = libnautilus-wipe.la
-test_SOURCES = test.c
