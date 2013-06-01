@@ -1,3 +1,13 @@
+nautilus-wipe (0.2-1) unstable; urgency=low
+
+  * New upstream release.
+  * Bump Standards-Version to 3.9.4, no change required.
+  * Disable automake silent building to make the build logs easier to
+    audit (think: hardening compiler flags). Detected thanks to the Buildd
+    Log Scanner.
+
+ -- intrigeri <intrigeri@debian.org>  Sat, 01 Jun 2013 13:49:34 +0200
+
 nautilus-wipe (0.1.1+git20130516-1) experimental; urgency=low
 
   * New upstream Git snapshot at commit 24433cb. (Closes: #699080)
