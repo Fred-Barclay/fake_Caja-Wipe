@@ -1,0 +1,33 @@
+From: Colomban Wendling <ban@herbesfolles.org>
+Date: Sat, 1 Jun 2013 15:45:41 +0200
+Subject: Fix support for Automake 1.12
+
+Automake 1.12 now overrides warnings implied by the chosen strictness
+even if that strictness appears after the warning flag.  In practice,
+specifying "foreign" after "-Wall" no longer disables portability
+warnings, but we need to disable them for gnome-doc-utils -- and not to
+need AM_PROG_AR when using libtool, which is required since 1.11.2
+when the -Wextra-portability flag is enabled.
+
+So, explicitly disable portability warnings for fix support for
+Automake 1.12.
+
+Forwarded: not-needed
+Origin: upstream, http://git.tuxfamily.org/?p=wipetools/nautiluswipe.git;a=commit;h=c73f2c1d3ccbe603e99772cc6c0cb69c4f3f6923
+---
+ configure.ac |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 6162b03..68e7391 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -5,7 +5,7 @@ AC_INIT([nautilus-wipe], [0.2], [ban@herbesfolles.org])
+ AC_CONFIG_SRCDIR([nautilus-wipe/nw-extension.h])
+ AC_CONFIG_AUX_DIR([build/aux])
+ AC_CONFIG_MACRO_DIR([build/m4])
+-AM_INIT_AUTOMAKE([1.11.1 -Wall -Werror foreign])
++AM_INIT_AUTOMAKE([1.11.1 -Wall -Wno-portability -Werror foreign])
+ AC_CONFIG_HEADERS([config.h])
+ 
+ AM_SILENT_RULES([yes])
