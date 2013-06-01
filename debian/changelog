@@ -1,12 +1,15 @@
 nautilus-wipe (0.2-1) unstable; urgency=low
 
   * New upstream release.
+  * Cherry-pick patch from upstream Git to fix support for Automake 1.12.
   * Bump Standards-Version to 3.9.4, no change required.
   * Disable automake silent building to make the build logs easier to
     audit (think: hardening compiler flags). Detected thanks to the Buildd
     Log Scanner.
+  * Use canonical URL for Vcs-Git.
+  * Upload to unstable.
 
- -- intrigeri <intrigeri@debian.org>  Sat, 01 Jun 2013 13:49:34 +0200
+ -- intrigeri <intrigeri@debian.org>  Sat, 01 Jun 2013 16:49:34 +0200
 
 nautilus-wipe (0.1.1+git20130516-1) experimental; urgency=low
 
