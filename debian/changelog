@@ -1,3 +1,15 @@
+nautilus-wipe (0.2.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop override for buggy Lintian warning that was fixed since then.
+  * Drop 0001-Fix-support-for-Automake-1.12.patch, included upstream.
+  * Declare compliance with standards 3.9.5.
+  * Reformat debian/control with cme.
+  * Drop versioning for dependencies that are satisfied on Squeeze.
+  * Add OpenPGP signature checking support to debian/watch.
+
+ -- intrigeri <intrigeri@debian.org>  Fri, 24 Jan 2014 15:24:49 +0100
+
 nautilus-wipe (0.2-1) unstable; urgency=low
 
   * New upstream release.
