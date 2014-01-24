@@ -1,2 +1,3 @@
 version=3
-http://download.tuxfamily.org/wipetools/releases/nautilus-wipe/   ^nautilus-wipe-v?(\d[\d.-]+)\.(?:tar(?:\.gz|\.bz2)?|tgz|zip)$
+opts="pgpsigurlmangle=s/$/.sig/" \
+  http://download.tuxfamily.org/wipetools/releases/nautilus-wipe/   ^nautilus-wipe-v?(\d[\d.-]+)\.(?:tar(?:\.gz|\.bz2)?|tgz|zip)$
