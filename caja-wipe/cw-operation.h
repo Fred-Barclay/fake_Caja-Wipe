@@ -1,7 +1,8 @@
 /*
- *  nautilus-wipe - a nautilus extension to wipe file(s)
- * 
+ *  caja-wipe - a caja extension to wipe file(s)
+ *
  *  Copyright (C) 2012 Colomban Wendling <ban@herbesfolles.org>
+ *  Copyright (C) 2016 Caja Wipe Authors
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public
@@ -19,8 +20,8 @@
  *
  */
 
-#ifndef NW_OPERATION_H
-#define NW_OPERATION_H
+#ifndef CW_OPERATION_H
+#define CW_OPERATION_H
 
 #include <glib.h>
 #include <glib-object.h>
@@ -28,29 +29,29 @@
 G_BEGIN_DECLS
 
 
-#define NW_TYPE_OPERATION             (nw_operation_get_type ())
-#define NW_OPERATION(o)               (G_TYPE_CHECK_INSTANCE_CAST ((o), NW_TYPE_OPERATION, NwOperation))
-#define NW_IS_OPERATION(o)            (G_TYPE_CHECK_INSTANCE_TYPE ((o), NW_TYPE_OPERATION))
-#define NW_OPERATION_GET_INTERFACE(o) (G_TYPE_INSTANCE_GET_INTERFACE ((o), NW_TYPE_OPERATION, NwOperationInterface))
+#define CW_TYPE_OPERATION             (cw_operation_get_type ())
+#define CW_OPERATION(o)               (G_TYPE_CHECK_INSTANCE_CAST ((o), CW_TYPE_OPERATION, CwOperation))
+#define CW_IS_OPERATION(o)            (G_TYPE_CHECK_INSTANCE_TYPE ((o), CW_TYPE_OPERATION))
+#define CW_OPERATION_GET_INTERFACE(o) (G_TYPE_INSTANCE_GET_INTERFACE ((o), CW_TYPE_OPERATION, CwOperationInterface))
 
-typedef struct _NwOperation           NwOperation;
-typedef struct _NwOperationInterface  NwOperationInterface;
+typedef struct _CwOperation           CwOperation;
+typedef struct _CwOperationInterface  CwOperationInterface;
 
-struct _NwOperationInterface {
+struct _CwOperationInterface {
   GTypeInterface parent;
-  
-  void   (*add_file)        (NwOperation *self,
+
+  void   (*add_file)        (CwOperation *self,
                              const gchar *path);
-  void   (*add_files)       (NwOperation *self,
+  void   (*add_files)       (CwOperation *self,
                              GList       *files);
 };
 
 
-GType   nw_operation_get_type   (void) G_GNUC_CONST;
+GType   cw_operation_get_type   (void) G_GNUC_CONST;
 
-void    nw_operation_add_file   (NwOperation *self,
+void    cw_operation_add_file   (CwOperation *self,
                                  const gchar *path);
-void    nw_operation_add_files  (NwOperation *self,
+void    cw_operation_add_files  (CwOperation *self,
                                  GList       *files);
 
 

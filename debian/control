@@ -1,5 +1,5 @@
-Source: nautilus-wipe
-Maintainer: intrigeri <intrigeri@debian.org>
+Source: caja-wipe
+Maintainer: Fred Barclay <BugsAteFred@gmail.com>
 Section: utils
 Priority: optional
 Build-Depends: automake,
@@ -10,22 +10,19 @@ Build-Depends: automake,
                libgsecuredelete-dev,
                libgtk-3-dev,
                libtool,
-               libnautilus-extension-dev (>= 3.0.0),
+               libcaja-extension-dev (>= 1.0.8),
                rarian-compat
 Standards-Version: 3.9.5
-Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/nautilus-wipe.git
-Vcs-Git: git://anonscm.debian.org/collab-maint/nautilus-wipe.git
-Homepage: http://wipetools.tuxfamily.org/nautilus-wipe.html
+Vcs-Git: https://github.com/Fred-Barclay/Caja-wipe.git
 
-Package: nautilus-wipe
+Package: caja-wipe
 Architecture: any
-Depends: ${shlibs:Depends},
-         ${misc:Depends},
+Depends: ${misc:Depends},
          libgsecuredelete0,
          libgtk-3-0,
-         libnautilus-extension1a
-Description: Secure deletion extension for Nautilus
- Nautilus Wipe is a Nautilus extension that adds "Securely erase" and
+         libcaja-extension1
+Description: Secure deletion extension for Caja
+ Caja Wipe is a Caja extension that adds "Securely erase" and
  "Securely fill empty space" items to the right-click menu.
  .
  The progress and results of the operations are shown in a progress

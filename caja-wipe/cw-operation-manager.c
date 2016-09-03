@@ -1,5 +1,5 @@
 /*
- *  nautilus-wipe - a nautilus extension to wipe file(s)
+ *  caja-wipe - a caja extension to wipe file(s)
  * 
  *  Copyright (C) 2009-2012 Colomban Wendling <ban@herbesfolles.org>
  *
@@ -23,7 +23,7 @@
 # include "config.h"
 #endif
 
-#include "nw-operation-manager.h"
+#include "cw-operation-manager.h"
 
 #include <stdarg.h>
 #include <glib.h>
@@ -32,8 +32,8 @@
 #include <gtk/gtk.h>
 #include <gsecuredelete/gsecuredelete.h>
 
-#include "nw-progress-dialog.h"
-#include "nw-compat.h"
+#include "cw-progress-dialog.h"
+#include "cw-compat.h"
 
 
 static GtkResponseType  display_dialog     (GtkWindow       *parent,
@@ -138,20 +138,20 @@ string_last_line (const gchar *str)
 
 
 
-struct NwOperationData
+struct CwOperationData
 {
-  NwOperation        *operation;
+  CwOperation        *operation;
   GtkWindow          *window;
   gulong              window_destroy_hid;
-  NwProgressDialog   *progress_dialog;
+  CwProgressDialog   *progress_dialog;
   gchar              *failed_primary_text;
   gchar              *success_primary_text;
   gchar              *success_secondary_text;
 };
 
-/* Frees a NwOperationData structure */
+/* Frees a CwOperationData structure */
 static void
-free_opdata (struct NwOperationData *opdata)
+free_opdata (struct CwOperationData *opdata)
 {
   if (opdata->window_destroy_hid) {
     g_signal_handler_disconnect (opdata->window, opdata->window_destroy_hid);
@@ -169,7 +169,7 @@ free_opdata (struct NwOperationData *opdata)
  * to the death. doing this is useful not to have a bad window pointer later */
 static void
 opdata_window_destroy_handler (GtkWidget               *obj,
-                               struct NwOperationData  *opdata)
+                               struct CwOperationData  *opdata)
 {
   g_signal_handler_disconnect (opdata->window, opdata->window_destroy_hid);
   opdata->window_destroy_hid = 0;
@@ -178,7 +178,7 @@ opdata_window_destroy_handler (GtkWidget               *obj,
 
 /* Displays an operation's error */
 static void
-display_operation_error (struct NwOperationData  *opdata,
+display_operation_error (struct CwOperationData  *opdata,
                          const gchar             *error)
 {
   GtkWidget      *dialog;
@@ -227,7 +227,7 @@ operation_finished_handler (GsdDeleteOperation *operation,
                             const gchar        *error,
                             gpointer            data)
 {
-  struct NwOperationData *opdata = data;
+  struct CwOperationData *opdata = data;
   
   gtk_widget_destroy (GTK_WIDGET (opdata->progress_dialog));
   if (! success) {
@@ -247,9 +247,9 @@ operation_progress_handler (GsdDeleteOperation *operation,
                             gdouble             fraction,
                             gpointer            data)
 {
-  struct NwOperationData *opdata = data;
+  struct CwOperationData *opdata = data;
   
-  nw_progress_dialog_set_fraction (opdata->progress_dialog, fraction);
+  cw_progress_dialog_set_fraction (opdata->progress_dialog, fraction);
 }
 
 /* sets @pref according to state of @toggle */
@@ -282,7 +282,7 @@ help_button_clicked_handler (GtkWidget *widget,
   GError     *err = NULL;
   
   if (! gtk_show_uri (gtk_widget_get_screen (widget),
-                      "ghelp:nautilus-wipe?nautilus-wipe-config",
+                      "ghelp:caja-wipe?caja-wipe-config",
                       gtk_get_current_event_time (),
                       &err)) {
     /* display the error.
@@ -462,7 +462,7 @@ progress_dialog_response_handler (GtkDialog *dialog,
                                   gint       response_id,
                                   gpointer   data)
 {
-  struct NwOperationData *opdata = data;
+  struct CwOperationData *opdata = data;
   
   switch (response_id) {
     case GTK_RESPONSE_CANCEL:
@@ -484,7 +484,7 @@ progress_dialog_response_handler (GtkDialog *dialog,
 }
 
 /* 
- * nw_operation_manager_run:
+ * cw_operation_manager_run:
  * @parent: Parent window for dialogs
  * @files: List of paths to pass to @operation_launcher_func
  * @confirm_primary_text: Primary text for the confirmation dialog
@@ -504,14 +504,14 @@ progress_dialog_response_handler (GtkDialog *dialog,
  * 
  */
 void
-nw_operation_manager_run (GtkWindow    *parent,
+cw_operation_manager_run (GtkWindow    *parent,
                           GList        *files,
                           const gchar  *confirm_primary_text,
                           const gchar  *confirm_secondary_text,
                           const gchar  *confirm_button_text,
                           GtkWidget    *confirm_button_icon,
                           const gchar  *progress_dialog_text,
-                          NwOperation  *operation,
+                          CwOperation  *operation,
                           const gchar  *failed_primary_text,
                           const gchar  *success_primary_text,
                           const gchar  *success_secondary_text)
@@ -528,15 +528,15 @@ nw_operation_manager_run (GtkWindow    *parent,
     g_object_unref (operation);
   } else {
     GError                 *err = NULL;
-    struct NwOperationData *opdata;
+    struct CwOperationData *opdata;
     
     opdata = g_slice_alloc (sizeof *opdata);
     opdata->window = parent;
     opdata->window_destroy_hid = g_signal_connect (opdata->window, "destroy",
                                                    G_CALLBACK (opdata_window_destroy_handler), opdata);
-    opdata->progress_dialog = NW_PROGRESS_DIALOG (nw_progress_dialog_new (opdata->window, 0,
+    opdata->progress_dialog = CW_PROGRESS_DIALOG (cw_progress_dialog_new (opdata->window, 0,
                                                                           "%s", progress_dialog_text));
-    nw_progress_dialog_set_has_cancel_button (opdata->progress_dialog, TRUE);
+    cw_progress_dialog_set_has_cancel_button (opdata->progress_dialog, TRUE);
     g_signal_connect (opdata->progress_dialog, "response",
                       G_CALLBACK (progress_dialog_response_handler), opdata);
     opdata->failed_primary_text = g_strdup (failed_primary_text);
@@ -553,7 +553,7 @@ nw_operation_manager_run (GtkWindow    *parent,
     g_signal_connect (opdata->operation, "progress",
                       G_CALLBACK (operation_progress_handler), opdata);
     
-    nw_operation_add_files (opdata->operation, files);
+    cw_operation_add_files (opdata->operation, files);
     if (! gsd_secure_delete_operation_run (GSD_SECURE_DELETE_OPERATION (opdata->operation),
                                            &err)) {
       if (err->code == G_SPAWN_ERROR_NOENT) {

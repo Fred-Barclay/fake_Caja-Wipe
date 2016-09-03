@@ -1,7 +1,8 @@
 /*
- *  nautilus-wipe - a nautilus extension to wipe file(s)
+ *  caja-wipe - a caja extension to wipe file(s)
  * 
  *  Copyright (C) 2009-2012 Colomban Wendling <ban@herbesfolles.org>
+ *  Copyright (C) 2016 Caja Write Authors
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public
@@ -19,13 +20,13 @@
  *
  */
 
-/* Nautilus extension */
+/* Caja extension */
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
 
-#include "nw-extension.h"
+#include "cw-extension.h"
 
 #include <glib.h>
 #include <glib/gi18n-lib.h>
@@ -36,16 +37,16 @@ static GType provider_types[1];
 
 /* initialization */
 void
-nautilus_module_initialize (GTypeModule *module)
+caja_module_initialize (GTypeModule *module)
 {
   g_message ("Initializing");
   bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
-  provider_types[0] = nw_extension_register_type (module);
+  provider_types[0] = cw_extension_register_type (module);
 }
 
 /* extension points types registration */
 void
-nautilus_module_list_types (const GType **types,
+caja_module_list_types (const GType **types,
                             int          *num_types)
 {
   *types = provider_types;
@@ -54,6 +55,6 @@ nautilus_module_list_types (const GType **types,
 
 /* cleanup */
 void
-nautilus_module_shutdown (void)
+caja_module_shutdown (void)
 {
 }

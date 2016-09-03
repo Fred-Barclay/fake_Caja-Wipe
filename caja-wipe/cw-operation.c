@@ -1,7 +1,8 @@
 /*
- *  nautilus-wipe - a nautilus extension to wipe file(s)
+ *  caja-wipe - a caja extension to wipe file(s)
  * 
  *  Copyright (C) 2012 Colomban Wendling <ban@herbesfolles.org>
+ *  Copyright (C) 2016 Caja Wipe Authors
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public
@@ -19,7 +20,7 @@
  *
  */
 
-#include "nw-operation.h"
+#include "cw-operation.h"
 
 #include <glib.h>
 #include <glib-object.h>
@@ -27,26 +28,26 @@
 #include <gsecuredelete/gsecuredelete.h>
 
 
-static void   nw_operation_real_add_files   (NwOperation *self,
+static void   cw_operation_real_add_files   (CwOperation *self,
                                              GList       *files);
 
 
-G_DEFINE_INTERFACE (NwOperation,
-                    nw_operation,
+G_DEFINE_INTERFACE (CwOperation,
+                    cw_operation,
                     GSD_TYPE_ZEROABLE_OPERATION)
 
 
 static void
-nw_operation_default_init (NwOperationInterface *iface)
+cw_operation_default_init (CwOperationInterface *iface)
 {
-  iface->add_files = nw_operation_real_add_files;
+  iface->add_files = cw_operation_real_add_files;
 }
 
 static void
-nw_operation_real_add_files (NwOperation *self,
+cw_operation_real_add_files (CwOperation *self,
                              GList       *files)
 {
-  NwOperationInterface *iface = NW_OPERATION_GET_INTERFACE (self);
+  CwOperationInterface *iface = CW_OPERATION_GET_INTERFACE (self);
   
   for (; files; files = files->next) {
     iface->add_file (self, files->data);
@@ -54,16 +55,16 @@ nw_operation_real_add_files (NwOperation *self,
 }
 
 void
-nw_operation_add_file (NwOperation *self,
+cw_operation_add_file (CwOperation *self,
                        const gchar *file)
 {
-  NW_OPERATION_GET_INTERFACE (self)->add_file (self, file);
+  CW_OPERATION_GET_INTERFACE (self)->add_file (self, file);
 }
 
 void
-nw_operation_add_files (NwOperation *self,
+cw_operation_add_files (CwOperation *self,
                         GList       *files)
 {
-  NW_OPERATION_GET_INTERFACE (self)->add_files (self, files);
+  CW_OPERATION_GET_INTERFACE (self)->add_files (self, files);
 }
 

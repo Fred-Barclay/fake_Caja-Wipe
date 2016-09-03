@@ -4,7 +4,7 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
-PACKAGE = nautilus-wipe
+PACKAGE = caja-wipe
 DESTDIR = $(CURDIR)/debian/$(PACKAGE)
 
 %:
@@ -12,16 +12,15 @@ DESTDIR = $(CURDIR)/debian/$(PACKAGE)
 
 override_dh_auto_configure:
 	./autogen.sh
-	dh_auto_configure -- --disable-silent-rules
+#	dh_auto_configure --disable-silent-rules
 
-override_dh_auto_install:
-	dh_auto_install
-	rm -f "$(DESTDIR)/usr/lib/nautilus/extensions-2.0/libnautilus-wipe.la"
-	rm -f "$(DESTDIR)/usr/lib/nautilus/extensions-3.0/libnautilus-wipe.la"
+#override_dh_auto_install:
+#	dh_auto_install
+#	rm -f "$(DESTDIR)/usr/share/caja/extensions/libcaja-wipe.la"
 
 override_dh_install:
 	dh_install --fail-missing
 
-# nautilus-wipe does not include any shared libraries
+# caja-wipe does not include any shared libraries
 # => let's avoid building a shlibs control file.
 override_dh_makeshlibs:

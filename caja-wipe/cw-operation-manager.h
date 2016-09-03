@@ -1,7 +1,8 @@
 /*
- *  nautilus-wipe - a nautilus extension to wipe file(s)
- * 
+ *  caja-wipe - a caja extension to wipe file(s)
+ *
  *  Copyright (C) 2009-2012 Colomban Wendling <ban@herbesfolles.org>
+ *  Copyright (C) 2016 Caja Wipe Authors
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public
@@ -19,26 +20,26 @@
  *
  */
 
-#ifndef NW_OPERATION_MANAGER_H
-#define NW_OPERATION_MANAGER_H
+#ifndef CW_OPERATION_MANAGER_H
+#define CW_OPERATION_MANAGER_H
 
 #include <glib.h>
 #include <glib-object.h>
 #include <gtk/gtk.h>
 
-#include "nw-operation.h"
+#include "cw-operation.h"
 
 G_BEGIN_DECLS
 
 
-void    nw_operation_manager_run  (GtkWindow   *parent,
+void    cw_operation_manager_run  (GtkWindow   *parent,
                                    GList       *files,
                                    const gchar *confirm_primary_text,
                                    const gchar *confirm_secondary_text,
                                    const gchar *confirm_button_text,
                                    GtkWidget   *confirm_button_icon,
                                    const gchar *progress_dialog_text,
-                                   NwOperation *operation,
+                                   CwOperation *operation,
                                    const gchar *failed_primary_text,
                                    const gchar *success_primary_text,
                                    const gchar *success_secondary_text);

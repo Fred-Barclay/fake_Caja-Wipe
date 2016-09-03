@@ -1,2 +1,2 @@
 # Upstream does not ship a changelog. Their Git log is pretty good, though.
-nautilus-wipe binary: no-upstream-changelog
+caja-wipe binary: no-upstream-changelog

@@ -1,7 +1,8 @@
 /*
- *  nautilus-wipe - a nautilus extension to wipe file(s)
- * 
+ *  caja-wipe - a caja extension to wipe file(s)
+ *
  *  Copyright (C) 2012 Colomban Wendling <ban@herbesfolles.org>
+ *  Copyright (C) 2016 Caja Wipe Authors
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public
@@ -19,8 +20,8 @@
  *
  */
 
-#ifndef NW_TYPE_UTILS_H
-#define NW_TYPE_UTILS_H
+#ifndef CW_TYPE_UTILS_H
+#define CW_TYPE_UTILS_H
 
 #include <glib.h>
 #include <glib-object.h>
@@ -28,7 +29,7 @@
 G_BEGIN_DECLS
 
 
-#define _NW_DEFINE_TYPE_MODULE_EXTENDED_BEGIN(TN, t_n, T_P, _f_)               \
+#define _CW_DEFINE_TYPE_MODULE_EXTENDED_BEGIN(TN, t_n, T_P, _f_)               \
                                                                                \
 static void     t_n##_init              (TN        *self);                     \
 static void     t_n##_class_init        (TN##Class *klass);                    \
@@ -52,7 +53,7 @@ t_n##_get_type (void)                                                          \
 }                                                                              \
                                                                                \
 GType                                                                          \
-t_n##_register_type (GTypeModule *nw_define_type_module_module)                \
+t_n##_register_type (GTypeModule *cw_define_type_module_module)                \
 {                                                                              \
   static const GTypeInfo type_info = {                                         \
     sizeof (TN##Class),                       /* class size */                 \
@@ -66,42 +67,42 @@ t_n##_register_type (GTypeModule *nw_define_type_module_module)                \
     (GInstanceInitFunc) t_n##_init,           /* instance init */              \
     NULL                                      /* value table */                \
   };                                                                           \
-  GType nw_define_type_module_id = 0;                                          \
+  GType cw_define_type_module_id = 0;                                          \
                                                                                \
-  nw_define_type_module_id = g_type_module_register_type (nw_define_type_module_module, \
+  cw_define_type_module_id = g_type_module_register_type (cw_define_type_module_module, \
                                                           T_P, #TN,            \
                                                           &type_info, _f_);    \
-  t_n##__GType = nw_define_type_module_id;                                     \
+  t_n##__GType = cw_define_type_module_id;                                     \
   { /* custom code follows */
-#define _NW_DEFINE_TYPE_MODULE_EXTENDED_END()                                  \
+#define _CW_DEFINE_TYPE_MODULE_EXTENDED_END()                                  \
     /* following custom code */                                                \
   }                                                                            \
-  return nw_define_type_module_id;                                             \
+  return cw_define_type_module_id;                                             \
 }
 
-#define NW_DEFINE_TYPE_MODULE_EXTENDED(TN, t_n, T_P, _f_, _C_)                 \
-  _NW_DEFINE_TYPE_MODULE_EXTENDED_BEGIN (TN, t_n, T_P, _f_)                    \
+#define CW_DEFINE_TYPE_MODULE_EXTENDED(TN, t_n, T_P, _f_, _C_)                 \
+  _CW_DEFINE_TYPE_MODULE_EXTENDED_BEGIN (TN, t_n, T_P, _f_)                    \
   { _C_; }                                                                     \
-  _NW_DEFINE_TYPE_MODULE_EXTENDED_END ()
+  _CW_DEFINE_TYPE_MODULE_EXTENDED_END ()
 
-#define NW_DEFINE_TYPE_MODULE_WITH_CODE(TN, t_n, T_P, _C_)                     \
-  _NW_DEFINE_TYPE_MODULE_EXTENDED_BEGIN (TN, t_n, T_P, 0)                      \
+#define CW_DEFINE_TYPE_MODULE_WITH_CODE(TN, t_n, T_P, _C_)                     \
+  _CW_DEFINE_TYPE_MODULE_EXTENDED_BEGIN (TN, t_n, T_P, 0)                      \
   { _C_; }                                                                     \
-  _NW_DEFINE_TYPE_MODULE_EXTENDED_END ()
+  _CW_DEFINE_TYPE_MODULE_EXTENDED_END ()
 
-#define NW_DEFINE_TYPE_MODULE(TN, t_n, T_P)                                    \
-  NW_DEFINE_TYPE_MODULE_EXTENDED (TN, t_n, T_P, 0, {})
+#define CW_DEFINE_TYPE_MODULE(TN, t_n, T_P)                                    \
+  CW_DEFINE_TYPE_MODULE_EXTENDED (TN, t_n, T_P, 0, {})
 
-#define NW_TYPE_MODULE_IMPLEMENT_INTERFACE(TYPE_IFACE, iface_init)             \
+#define CW_TYPE_MODULE_IMPLEMENT_INTERFACE(TYPE_IFACE, iface_init)             \
 {                                                                              \
-  static const GInterfaceInfo nw_type_module_implement_interface_info = {      \
+  static const GInterfaceInfo cw_type_module_implement_interface_info = {      \
     (GInterfaceInitFunc) iface_init, NULL, NULL                                \
   };                                                                           \
                                                                                \
-  g_type_module_add_interface (nw_define_type_module_module,                   \
-                               nw_define_type_module_id,                       \
+  g_type_module_add_interface (cw_define_type_module_module,                   \
+                               cw_define_type_module_id,                       \
                                TYPE_IFACE,                                     \
-                               &nw_type_module_implement_interface_info);      \
+                               &cw_type_module_implement_interface_info);      \
 }
 
 

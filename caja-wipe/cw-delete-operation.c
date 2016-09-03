@@ -1,7 +1,8 @@
 /*
- *  nautilus-wipe - a nautilus extension to wipe file(s)
+ *  caja-wipe - a caja extension to wipe file(s)
  * 
  *  Copyright (C) 2009-2012 Colomban Wendling <ban@herbesfolles.org>
+ *  Copyright (C) 2016 Caja Wipe Authors
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public
@@ -19,52 +20,52 @@
  *
  */
 
-#include "nw-delete-operation.h"
+#include "cw-delete-operation.h"
 
 #include <glib.h>
 #include <glib-object.h>
 #include <gsecuredelete/gsecuredelete.h>
 
-#include "nw-operation.h"
+#include "cw-operation.h"
 
 
-static void   nw_delete_operation_opeartion_iface_init  (NwOperationInterface *iface);
-static void   nw_delete_operation_real_add_file         (NwOperation *self,
+static void   cw_delete_operation_opeartion_iface_init  (CwOperationInterface *iface);
+static void   cw_delete_operation_real_add_file         (CwOperation *self,
                                                          const gchar *file);
 
 
-G_DEFINE_TYPE_WITH_CODE (NwDeleteOperation,
-                         nw_delete_operation,
+G_DEFINE_TYPE_WITH_CODE (CwDeleteOperation,
+                         cw_delete_operation,
                          GSD_TYPE_DELETE_OPERATION,
-                         G_IMPLEMENT_INTERFACE (NW_TYPE_OPERATION,
-                                                nw_delete_operation_opeartion_iface_init))
+                         G_IMPLEMENT_INTERFACE (CW_TYPE_OPERATION,
+                                                cw_delete_operation_opeartion_iface_init))
 
 
 static void
-nw_delete_operation_opeartion_iface_init (NwOperationInterface *iface)
+cw_delete_operation_opeartion_iface_init (CwOperationInterface *iface)
 {
-  iface->add_file = nw_delete_operation_real_add_file;
+  iface->add_file = cw_delete_operation_real_add_file;
 }
 
 static void
-nw_delete_operation_class_init (NwDeleteOperationClass *klass)
-{
-}
-
-static void
-nw_delete_operation_init (NwDeleteOperation *self)
+cw_delete_operation_class_init (CwDeleteOperationClass *klass)
 {
 }
 
 static void
-nw_delete_operation_real_add_file (NwOperation *self,
+cw_delete_operation_init (CwDeleteOperation *self)
+{
+}
+
+static void
+cw_delete_operation_real_add_file (CwOperation *self,
                                    const gchar *file)
 {
   gsd_delete_operation_add_path (GSD_DELETE_OPERATION (self), file);
 }
 
-NwOperation *
-nw_delete_operation_new (void)
+CwOperation *
+cw_delete_operation_new (void)
 {
-  return g_object_new (NW_TYPE_DELETE_OPERATION, NULL);
+  return g_object_new (CW_TYPE_DELETE_OPERATION, NULL);
 }

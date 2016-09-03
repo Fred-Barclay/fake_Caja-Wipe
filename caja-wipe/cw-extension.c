@@ -1,7 +1,8 @@
 /*
- *  nautilus-wipe - a nautilus extension to wipe file(s)
+ *  caja-wipe - a caja extension to wipe file(s)
  * 
  *  Copyright (C) 2009-2012 Colomban Wendling <ban@herbesfolles.org>
+ *  Copyright (C) 2016 Caja Write Authors
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public
@@ -23,10 +24,10 @@
 # include "config.h"
 #endif
 
-#include "nw-extension.h"
+#include "cw-extension.h"
 
-#include <libnautilus-extension/nautilus-menu-provider.h>
-#include <libnautilus-extension/nautilus-file-info.h>
+#include <libcaja-extension/caja-menu-provider.h>
+#include <libcaja-extension/caja-file-info.h>
 
 #include <glib.h>
 #include <glib/gi18n-lib.h>
@@ -35,37 +36,37 @@
 
 #include <gsecuredelete/gsecuredelete.h>
 
-#include "nw-path-list.h"
-#include "nw-operation-manager.h"
-#include "nw-delete-operation.h"
-#include "nw-fill-operation.h"
-#include "nw-compat.h"
-#include "nw-type-utils.h"
+#include "cw-path-list.h"
+#include "cw-operation-manager.h"
+#include "cw-delete-operation.h"
+#include "cw-fill-operation.h"
+#include "cw-compat.h"
+#include "cw-type-utils.h"
 
 
 /* private prototypes */
-static GList *nw_extension_real_get_file_items        (NautilusMenuProvider *provider,
+static GList *cw_extension_real_get_file_items        (CajaMenuProvider *provider,
                                                        GtkWidget            *window,
                                                        GList                *files);
-static GList *nw_extension_real_get_background_items  (NautilusMenuProvider *provider,
+static GList *cw_extension_real_get_background_items  (CajaMenuProvider *provider,
                                                        GtkWidget            *window,
-                                                       NautilusFileInfo     *current_folder);
-static void   nw_extension_menu_provider_iface_init   (NautilusMenuProviderIface *iface);
+                                                       CajaFileInfo     *current_folder);
+static void   cw_extension_menu_provider_iface_init   (CajaMenuProviderIface *iface);
 
 
-#define ITEM_DATA_MOUNTPOINTS_KEY "Nw::Extension::mountpoints"
-#define ITEM_DATA_PATHS_KEY       "Nw::Extension::paths"
-#define ITEM_DATA_WINDOW_KEY      "Nw::Extension::parent-window"
+#define ITEM_DATA_MOUNTPOINTS_KEY "Cw::Extension::mountpoints"
+#define ITEM_DATA_PATHS_KEY       "Cw::Extension::paths"
+#define ITEM_DATA_WINDOW_KEY      "Cw::Extension::parent-window"
 
 
 
 GQuark
-nw_extension_error_quark (void)
+cw_extension_error_quark (void)
 {
   static volatile gsize quark = 0;
   
   if (g_once_init_enter (&quark)) {
-    GQuark q = g_quark_from_static_string ("NwExtensionError");
+    GQuark q = g_quark_from_static_string ("CwExtensionError");
     
     g_once_init_leave (&quark, q);
   }
@@ -73,34 +74,34 @@ nw_extension_error_quark (void)
   return (GQuark) quark;
 }
 
-NW_DEFINE_TYPE_MODULE_WITH_CODE (NwExtension,
-                                 nw_extension,
+CW_DEFINE_TYPE_MODULE_WITH_CODE (CwExtension,
+                                 cw_extension,
                                  G_TYPE_OBJECT,
-                                 NW_TYPE_MODULE_IMPLEMENT_INTERFACE (NAUTILUS_TYPE_MENU_PROVIDER,
-                                                                     nw_extension_menu_provider_iface_init))
+                                 CW_TYPE_MODULE_IMPLEMENT_INTERFACE (CAJA_TYPE_MENU_PROVIDER,
+                                                                     cw_extension_menu_provider_iface_init))
 
 
 
 static void
-nw_extension_menu_provider_iface_init (NautilusMenuProviderIface *iface)
+cw_extension_menu_provider_iface_init (CajaMenuProviderIface *iface)
 {
-  iface->get_file_items       = nw_extension_real_get_file_items;
-  iface->get_background_items = nw_extension_real_get_background_items;
+  iface->get_file_items       = cw_extension_real_get_file_items;
+  iface->get_background_items = cw_extension_real_get_background_items;
 }
 
 static void
-nw_extension_class_init (NwExtensionClass *class)
+cw_extension_class_init (CwExtensionClass *class)
 {
 }
 
 static void
-nw_extension_init (NwExtension *self)
+cw_extension_init (CwExtension *self)
 {
 }
 
 /* Runs the wipe operation */
 static void
-nw_extension_run_delete_operation (GtkWindow *parent,
+cw_extension_run_delete_operation (GtkWindow *parent,
                                    GList     *files)
 {
   gchar  *confirm_primary_text = NULL;
@@ -128,7 +129,7 @@ nw_extension_run_delete_operation (GtkWindow *parent,
                                             name);
     g_free (name);
   }
-  nw_operation_manager_run (
+  cw_operation_manager_run (
     parent, files,
     /* confirm dialog */
     confirm_primary_text,
@@ -138,7 +139,7 @@ nw_extension_run_delete_operation (GtkWindow *parent,
     /* progress dialog */
     _("Wiping files..."),
     /* operation launcher */
-    nw_delete_operation_new (),
+    cw_delete_operation_new (),
     /* failed dialog */
     _("Wipe failed."),
     /* success dialog */
@@ -150,7 +151,7 @@ nw_extension_run_delete_operation (GtkWindow *parent,
 
 /* Runs the fill operation */
 static void
-nw_extension_run_fill_operation (GtkWindow *parent,
+cw_extension_run_fill_operation (GtkWindow *parent,
                                  GList     *paths,
                                  GList     *mountpoints)
 {
@@ -204,7 +205,7 @@ nw_extension_run_fill_operation (GtkWindow *parent,
                                               name);
     g_free (name);
   }
-  nw_operation_manager_run (
+  cw_operation_manager_run (
     parent, paths,
     /* confirm dialog */
     confirm_primary_text,
@@ -214,7 +215,7 @@ nw_extension_run_fill_operation (GtkWindow *parent,
     /* progress dialog */
     _("Wiping available diskspace..."),
     /* operation launcher */
-    nw_fill_operation_new (),
+    cw_fill_operation_new (),
     /* failed dialog */
     _("Wipe failed"),
     /* success dialog */
@@ -230,26 +231,26 @@ static void
 wipe_menu_item_activate_handler (GObject *item,
                                  gpointer data)
 {
-  nw_extension_run_delete_operation (g_object_get_data (item, ITEM_DATA_WINDOW_KEY),
+  cw_extension_run_delete_operation (g_object_get_data (item, ITEM_DATA_WINDOW_KEY),
                                      g_object_get_data (item, ITEM_DATA_PATHS_KEY));
 }
 
-static NautilusMenuItem *
-create_wipe_menu_item (NautilusMenuProvider *provider,
+static CajaMenuItem *
+create_wipe_menu_item (CajaMenuProvider *provider,
                        const gchar          *item_name,
                        GtkWidget            *window,
                        GList                *paths)
 {
-  NautilusMenuItem *item;
+  CajaMenuItem *item;
   
-  item = nautilus_menu_item_new (item_name,
+  item = caja_menu_item_new (item_name,
                                  _("Wipe"),
                                  _("Delete each selected item and overwrite its data"),
                                  GTK_STOCK_DELETE);
   g_object_set_data (G_OBJECT (item), ITEM_DATA_WINDOW_KEY, window);
   g_object_set_data_full (G_OBJECT (item), ITEM_DATA_PATHS_KEY,
-                          nw_path_list_copy (paths),
-                          (GDestroyNotify) nw_path_list_free);
+                          cw_path_list_copy (paths),
+                          (GDestroyNotify) cw_path_list_free);
   g_signal_connect (item, "activate",
                     G_CALLBACK (wipe_menu_item_activate_handler), NULL);
   
@@ -260,37 +261,37 @@ static void
 fill_menu_item_activate_handler (GObject *item,
                                  gpointer data)
 {
-  nw_extension_run_fill_operation (g_object_get_data (item, ITEM_DATA_WINDOW_KEY),
+  cw_extension_run_fill_operation (g_object_get_data (item, ITEM_DATA_WINDOW_KEY),
                                    g_object_get_data (item, ITEM_DATA_PATHS_KEY),
                                    g_object_get_data (item, ITEM_DATA_MOUNTPOINTS_KEY));
 }
 
-static NautilusMenuItem *
-create_fill_menu_item (NautilusMenuProvider *provider,
+static CajaMenuItem *
+create_fill_menu_item (CajaMenuProvider *provider,
                        const gchar          *item_name,
                        GtkWidget            *window,
                        GList                *files)
 {
-  NautilusMenuItem *item        = NULL;
+  CajaMenuItem *item        = NULL;
   GList            *mountpoints = NULL;
   GList            *folders     = NULL;
   GError           *err         = NULL;
   
-  if (! nw_fill_operation_filter_files (files, &folders, &mountpoints, &err)) {
+  if (! cw_fill_operation_filter_files (files, &folders, &mountpoints, &err)) {
     g_warning (_("File filtering failed: %s"), err->message);
     g_error_free (err);
   } else {
-    item = nautilus_menu_item_new (item_name,
+    item = caja_menu_item_new (item_name,
                                    _("Wipe available diskspace"),
                                    _("Overwrite available diskspace in this device(s)"),
                                    GTK_STOCK_CLEAR);
     g_object_set_data (G_OBJECT (item), ITEM_DATA_WINDOW_KEY, window);
     g_object_set_data_full (G_OBJECT (item), ITEM_DATA_PATHS_KEY,
                             folders,
-                            (GDestroyNotify) nw_path_list_free);
+                            (GDestroyNotify) cw_path_list_free);
     g_object_set_data_full (G_OBJECT (item), ITEM_DATA_MOUNTPOINTS_KEY,
                             mountpoints,
-                            (GDestroyNotify) nw_path_list_free);
+                            (GDestroyNotify) cw_path_list_free);
     g_signal_connect (item, "activate",
                       G_CALLBACK (fill_menu_item_activate_handler), NULL);
   }
@@ -301,52 +302,52 @@ create_fill_menu_item (NautilusMenuProvider *provider,
 /* adds @item to the #GList @items if not %NULL */
 #define ADD_ITEM(items, item)                         \
   G_STMT_START {                                      \
-    NautilusMenuItem *ADD_ITEM__item = (item);        \
+    CajaMenuItem *ADD_ITEM__item = (item);        \
                                                       \
     if (ADD_ITEM__item != NULL) {                     \
       items = g_list_append (items, ADD_ITEM__item);  \
     }                                                 \
   } G_STMT_END
 
-/* populates Nautilus' file menu */
+/* populates Caja' file menu */
 static GList *
-nw_extension_real_get_file_items (NautilusMenuProvider *provider,
+cw_extension_real_get_file_items (CajaMenuProvider *provider,
                                   GtkWidget            *window,
                                   GList                *files)
 {
   GList *items = NULL;
   GList *paths;
   
-  paths = nw_path_list_new_from_nfi_list (files);
+  paths = cw_path_list_new_from_cfi_list (files);
   if (paths) {
     ADD_ITEM (items, create_wipe_menu_item (provider,
-                                            "nautilus-wipe::files-items::wipe",
+                                            "caja-wipe::files-items::wipe",
                                             window, paths));
     ADD_ITEM (items, create_fill_menu_item (provider,
-                                            "nautilus-wipe::files-items::fill",
+                                            "caja-wipe::files-items::fill",
                                             window, paths));
   }
-  nw_path_list_free (paths);
+  cw_path_list_free (paths);
   
   return items;
 }
 
-/* populates Nautilus' background menu */
+/* populates Caja' background menu */
 static GList *
-nw_extension_real_get_background_items (NautilusMenuProvider *provider,
+cw_extension_real_get_background_items (CajaMenuProvider *provider,
                                         GtkWidget            *window,
-                                        NautilusFileInfo     *current_folder)
+                                        CajaFileInfo     *current_folder)
 {
   GList *items = NULL;
   GList *paths = NULL;
   
-  paths = g_list_append (paths, nw_path_from_nfi (current_folder));
+  paths = g_list_append (paths, cw_path_from_cfi (current_folder));
   if (paths && paths->data) {
     ADD_ITEM (items, create_fill_menu_item (provider,
-                                            "nautilus-wipe::background-items::fill",
+                                            "caja-wipe::background-items::fill",
                                             window, paths));
   }
-  nw_path_list_free (paths);
+  cw_path_list_free (paths);
   
   return items;
 }

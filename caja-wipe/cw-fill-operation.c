@@ -1,7 +1,8 @@
 /*
- *  nautilus-wipe - a nautilus extension to wipe file(s)
+ *  caja-wipe - a caja extension to wipe file(s)
  * 
  *  Copyright (C) 2009-2012 Colomban Wendling <ban@herbesfolles.org>
+ *  Copyright (C) 2016 Caja Wipe Authors
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public
@@ -23,7 +24,7 @@
 # include "config.h"
 #endif
 
-#include "nw-fill-operation.h"
+#include "cw-fill-operation.h"
 
 #include <glib.h>
 #include <glib/gi18n-lib.h>
@@ -34,17 +35,17 @@
 #endif
 #include <gsecuredelete/gsecuredelete.h>
 
-#include "nw-operation.h"
-#include "nw-path-list.h"
+#include "cw-operation.h"
+#include "cw-path-list.h"
 
 
 GQuark
-nw_fill_operation_error_quark (void)
+cw_fill_operation_error_quark (void)
 {
   static volatile gsize quark = 0;
   
   if (g_once_init_enter (&quark)) {
-    GQuark q = g_quark_from_static_string ("NwFillOperationError");
+    GQuark q = g_quark_from_static_string ("CwFillOperationError");
     
     g_once_init_leave (&quark, q);
   }
@@ -53,20 +54,20 @@ nw_fill_operation_error_quark (void)
 }
 
 
-static void     nw_fill_operation_operation_iface_init  (NwOperationInterface *iface);
-static void     nw_fill_operation_real_add_file         (NwOperation *op,
+static void     cw_fill_operation_operation_iface_init  (CwOperationInterface *iface);
+static void     cw_fill_operation_real_add_file         (CwOperation *op,
                                                          const gchar *path);
-static void     nw_fill_operation_finalize              (GObject *object);
-static void     nw_fill_operation_finished_handler      (GsdFillOperation *operation,
+static void     cw_fill_operation_finalize              (GObject *object);
+static void     cw_fill_operation_finished_handler      (GsdFillOperation *operation,
                                                          gboolean          success,
                                                          const gchar      *message,
-                                                         NwFillOperation  *self);
-static void     nw_fill_operation_progress_handler      (GsdFillOperation *operation,
+                                                         CwFillOperation  *self);
+static void     cw_fill_operation_progress_handler      (GsdFillOperation *operation,
                                                          gdouble           fraction,
-                                                         NwFillOperation  *self);
+                                                         CwFillOperation  *self);
 
 
-struct _NwFillOperationPrivate {
+struct _CwFillOperationPrivate {
   GList  *directories;
   
   guint   n_op;
@@ -76,65 +77,65 @@ struct _NwFillOperationPrivate {
   gulong  finished_hid;
 };
 
-G_DEFINE_TYPE_WITH_CODE (NwFillOperation,
-                         nw_fill_operation,
+G_DEFINE_TYPE_WITH_CODE (CwFillOperation,
+                         cw_fill_operation,
                          GSD_TYPE_FILL_OPERATION,
-                         G_IMPLEMENT_INTERFACE (NW_TYPE_OPERATION,
-                                                nw_fill_operation_operation_iface_init))
+                         G_IMPLEMENT_INTERFACE (CW_TYPE_OPERATION,
+                                                cw_fill_operation_operation_iface_init))
 
 
 static void
-nw_fill_operation_operation_iface_init (NwOperationInterface *iface)
+cw_fill_operation_operation_iface_init (CwOperationInterface *iface)
 {
-  iface->add_file = nw_fill_operation_real_add_file;
+  iface->add_file = cw_fill_operation_real_add_file;
 }
 
 static void
-nw_fill_operation_class_init (NwFillOperationClass *klass)
+cw_fill_operation_class_init (CwFillOperationClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   
-  object_class->finalize = nw_fill_operation_finalize;
+  object_class->finalize = cw_fill_operation_finalize;
   
-  g_type_class_add_private (klass, sizeof (NwFillOperationPrivate));
+  g_type_class_add_private (klass, sizeof (CwFillOperationPrivate));
 }
 
 static void
-nw_fill_operation_init (NwFillOperation *self)
+cw_fill_operation_init (CwFillOperation *self)
 {
   self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self,
-                                            NW_TYPE_FILL_OPERATION,
-                                            NwFillOperationPrivate);
+                                            CW_TYPE_FILL_OPERATION,
+                                            CwFillOperationPrivate);
   
   self->priv->directories = NULL;
   self->priv->n_op = 0;
   self->priv->n_op_done = 0;
   
   self->priv->finished_hid = g_signal_connect (self, "finished",
-                                               G_CALLBACK (nw_fill_operation_finished_handler),
+                                               G_CALLBACK (cw_fill_operation_finished_handler),
                                                self);
   self->priv->progress_hid = g_signal_connect (self, "progress",
-                                               G_CALLBACK (nw_fill_operation_progress_handler),
+                                               G_CALLBACK (cw_fill_operation_progress_handler),
                                                self);
 }
 
 static void
-nw_fill_operation_finalize (GObject *object)
+cw_fill_operation_finalize (GObject *object)
 {
-  NwFillOperation *self = NW_FILL_OPERATION (object);
+  CwFillOperation *self = CW_FILL_OPERATION (object);
   
   g_list_foreach (self->priv->directories, (GFunc) g_free, NULL);
   g_list_free (self->priv->directories);
   self->priv->directories = NULL;
   
-  G_OBJECT_CLASS (nw_fill_operation_parent_class)->finalize (object);
+  G_OBJECT_CLASS (cw_fill_operation_parent_class)->finalize (object);
 }
 
 static void
-nw_fill_operation_real_add_file (NwOperation *op,
+cw_fill_operation_real_add_file (CwOperation *op,
                                  const gchar *path)
 {
-  NwFillOperation *self = NW_FILL_OPERATION (op);
+  CwFillOperation *self = CW_FILL_OPERATION (op);
   
   /* FIXME: filter file? */
   self->priv->directories = g_list_prepend (self->priv->directories,
@@ -148,9 +149,9 @@ nw_fill_operation_real_add_file (NwOperation *op,
 /* wrapper for the progress handler returning the current progression over all
  * operations  */
 static void
-nw_fill_operation_progress_handler (GsdFillOperation *operation,
+cw_fill_operation_progress_handler (GsdFillOperation *operation,
                                     gdouble           fraction,
-                                    NwFillOperation  *self)
+                                    CwFillOperation  *self)
 {
   /* abort emission and replace by our overridden one.  Not to do that
    * recursively, we block our handler during the re-emission */
@@ -165,7 +166,7 @@ nw_fill_operation_progress_handler (GsdFillOperation *operation,
  * operation.
  * we need this kind of hack since operation are locked while running. */
 static gboolean
-launch_next_operation (NwFillOperation *self)
+launch_next_operation (CwFillOperation *self)
 {
   gboolean busy;
   
@@ -190,7 +191,7 @@ launch_next_operation (NwFillOperation *self)
 
 /* Removes the current directory to proceed */
 static void
-nw_fill_operation_pop_dir (NwFillOperation *self)
+cw_fill_operation_pop_dir (CwFillOperation *self)
 {
   GList *tmp;
   
@@ -205,15 +206,15 @@ nw_fill_operation_pop_dir (NwFillOperation *self)
 /* Wrapper for the finished handler.  It launches the next operation if there
  * is one left. */
 static void
-nw_fill_operation_finished_handler (GsdFillOperation *operation,
+cw_fill_operation_finished_handler (GsdFillOperation *operation,
                                     gboolean          success,
                                     const gchar      *message,
-                                    NwFillOperation  *self)
+                                    CwFillOperation  *self)
 {
   if (success) {
     self->priv->n_op_done++;
     /* remove the directory just proceeded */
-    nw_fill_operation_pop_dir (self);
+    cw_fill_operation_pop_dir (self);
     
     /* if we have work left to be done... */
     if (self->priv->directories) {
@@ -298,8 +299,8 @@ find_mountpoint (const gchar *path,
       gchar *uri = g_file_get_uri (mountpoint_file);
       
       g_set_error (&err,
-                   NW_FILL_OPERATION_ERROR,
-                   NW_FILL_OPERATION_ERROR_REMOTE_MOUNT,
+                   CW_FILL_OPERATION_ERROR,
+                   CW_FILL_OPERATION_ERROR_REMOTE_MOUNT,
                    _("Mount \"%s\" is not local"), uri);
       g_free (uri);
     }
@@ -314,8 +315,8 @@ find_mountpoint (const gchar *path,
     mountpoint_path = find_mountpoint_unix (path);
     if (! mountpoint_path) {
       g_set_error (&err,
-                   NW_FILL_OPERATION_ERROR,
-                   NW_FILL_OPERATION_ERROR_MISSING_MOUNT,
+                   CW_FILL_OPERATION_ERROR,
+                   CW_FILL_OPERATION_ERROR_MISSING_MOUNT,
                    _("No mount point found for path \"%s\""), path);
     }
   }
@@ -328,7 +329,7 @@ find_mountpoint (const gchar *path,
 }
 
 /*
- * nw_fill_operation_filter_files:
+ * cw_fill_operation_filter_files:
  * @paths: A list of paths to filter
  * @work_paths_: return location for filtered paths
  * @work_mounts_: return location for filtered paths' mounts
@@ -340,12 +341,12 @@ find_mountpoint (const gchar *path,
  * The returned lists (@work_paths_ and @work_mounts_) have the same length, and
  * an index in a list correspond to the same in the other:
  * g_list_index(work_paths_, 0) is the path of g_list_index(work_mounts_, 0).
- * Free returned lists with nw_path_list_free().
+ * Free returned lists with cw_path_list_free().
  * 
  * Returns: %TRUE on success, %FALSE otherwise.
  */
 gboolean
-nw_fill_operation_filter_files (GList    *paths,
+cw_fill_operation_filter_files (GList    *paths,
                                 GList   **work_paths_,
                                 GList   **work_mounts_,
                                 GError  **error)
@@ -383,12 +384,12 @@ nw_fill_operation_filter_files (GList    *paths,
     }
   }
   if (err || ! work_paths_) {
-    nw_path_list_free (work_paths);
+    cw_path_list_free (work_paths);
   } else {
     *work_paths_ = g_list_reverse (work_paths);
   }
   if (err || ! work_mounts_) {
-    nw_path_list_free (work_mounts);
+    cw_path_list_free (work_mounts);
   } else {
     *work_mounts_ = g_list_reverse (work_mounts);
   }
@@ -399,8 +400,8 @@ nw_fill_operation_filter_files (GList    *paths,
   return ! err;
 }
 
-NwOperation *
-nw_fill_operation_new (void)
+CwOperation *
+cw_fill_operation_new (void)
 {
-  return g_object_new (NW_TYPE_FILL_OPERATION, NULL);
+  return g_object_new (CW_TYPE_FILL_OPERATION, NULL);
 }

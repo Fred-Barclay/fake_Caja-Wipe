@@ -1,8 +1,8 @@
 # Initially based on NautilusActions configure & build system.
 
 AC_PREREQ([2.64])
-AC_INIT([nautilus-wipe], [0.2.1], [ban@herbesfolles.org])
-AC_CONFIG_SRCDIR([nautilus-wipe/nw-extension.h])
+AC_INIT([caja-wipe], [0.9.0], [BugsAteFred@gmail.com])
+AC_CONFIG_SRCDIR([caja-wipe/cw-extension.h])
 AC_CONFIG_AUX_DIR([build/aux])
 AC_CONFIG_MACRO_DIR([build/m4])
 AM_INIT_AUTOMAKE([1.11.1 -Wall -Wno-portability foreign])
@@ -31,7 +31,7 @@ GLIB_REQUIRED=2.10
 # 2.4 for g_type_class_add_private()
 GOBJECT_REQUIRED=2.4.0
 GCONF_REQUIRED=2.0
-NAUTILUS_EXTENSION=2.0
+CAJA_EXTENSION=1.8
 GSECUREDELETE_REQUIRED=0.1
 GIO_UNIX_REQUIRED=2.0
 
@@ -55,9 +55,9 @@ AC_MSG_RESULT([$gtk_pkg])
 # mandatory packages
 PKG_CHECK_MODULES([GLIB],                   glib-2.0              >= ${GLIB_REQUIRED})
 PKG_CHECK_MODULES([GTK],                    $gtk_pkg              >= ${GTK_REQUIRED})
-PKG_CHECK_MODULES([LIBNAUTILUS_EXTENSION],  libnautilus-extension >= ${NAUTILUS_EXTENSION})
-PKG_CHECK_MODULES([GSECUREDELETE],          gsecuredelete         >= ${GSECUREDELETE_REQUIRED})
-# GConf is mandatory, but only for Nautilus 2.x
+PKG_CHECK_MODULES([LIBCAJA_EXTENSION],  libcaja-extension1 >= ${CAJA_EXTENSION})
+PKG_CHECK_MODULES([GSECUREDELETE],          libgsecuredelete0         >= ${GSECUREDELETE_REQUIRED})
+# GConf is mandatory, but only for Nautilus 2.x Unecessary in Caja????????????????????
 AS_IF([test "$gtk_pkg" = "gtk+-2.0"],
       [PKG_CHECK_MODULES([GCONF], gconf-2.0 >= ${GCONF_REQUIRED})
        AC_DEFINE([HAVE_GCONF], [1], [Whether we have GConf])])
@@ -82,19 +82,19 @@ AM_GLIB_GNU_GETTEXT
 
 # Checks for typedefs, structures, and compiler characteristics.
 
-# when working in a test environment, nautilus is typically installed in
+# when working in a test environment, caja is typically installed in
 # a non-standard location ; lets specify this here
-NA_NAUTILUS_EXTDIR
+CA_caja_EXTDIR
 
 # Checks for library functions.
-# If we are here we're sure we have libnautilus-extension, but we need this for
+# If we are here we're sure we have libcaja-extension1, but we need this for
 # the check below to work (for the lib to be found).
-AC_CHECK_LIB([nautilus-extension], [nautilus_menu_provider_get_file_items])
-AC_CHECK_FUNCS([nautilus_file_info_get_location])
+AC_CHECK_LIB([[caja]-extension], [caja_menu_provider_get_file_items])
+AC_CHECK_FUNCS([caja_file_info_get_location])
 
 # Output
 AC_CONFIG_FILES([Makefile
                  po/Makefile.in
-                 nautilus-wipe/Makefile
+                 caja-wipe/Makefile
                  help/Makefile])
 AC_OUTPUT

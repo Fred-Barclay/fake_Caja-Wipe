@@ -1,5 +1,5 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Source: http://wipetools.tuxfamily.org/nautilus-wipe.html
+Source: https://github.com/Fred-Barclay/Caja-wipe
 
 Files: *
 Copyright: © 2009-2011 Colomban Wendling <ban@herbesfolles.org>

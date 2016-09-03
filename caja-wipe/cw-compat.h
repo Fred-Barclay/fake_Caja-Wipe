@@ -1,7 +1,8 @@
 /*
- *  nautilus-wipe - a nautilus extension to wipe file(s)
- * 
+ *  caja-wipe - a caja extension to wipe file(s)
+ *
  *  Copyright (C) 2009-2011 Colomban Wendling <ban@herbesfolles.org>
+ *  Copyright (C) 2016 Caja Wipe Authors
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public
@@ -19,10 +20,10 @@
  *
  */
 
-/* Contains compatibility things for old GLib, GTK and Nautilus */
+/* Contains compatibility things for old GLib, GTK and Caja */
 
-#ifndef NW_COMPAT_H
-#define NW_COMPAT_H
+#ifndef CW_COMPAT_H
+#define CW_COMPAT_H
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
@@ -66,67 +67,67 @@ gtk_show_uri (GdkScreen    *screen,
   gboolean  success;
   gchar    *quoted_uri;
   gchar    *cmd;
-  
+
   quoted_uri = g_shell_quote (uri);
   cmd = g_strconcat ("xdg-open", " ", quoted_uri, NULL);
   g_free (quoted_uri);
   success = gdk_spawn_command_line_on_screen (screen, cmd, error);
   g_free (cmd);
-  
+
   return success;
 }
 
 #endif
 
 
-/* Nautilus stuff */
+/* Caja stuff */
 
-#if ! (defined (HAVE_NAUTILUS_FILE_INFO_GET_LOCATION) && \
-       HAVE_NAUTILUS_FILE_INFO_GET_LOCATION)
-# undef HAVE_NAUTILUS_FILE_INFO_GET_LOCATION
-# define HAVE_NAUTILUS_FILE_INFO_GET_LOCATION 1
+#if ! (defined (HAVE_CAJA_FILE_INFO_GET_LOCATION) && \
+       HAVE_CAJA_FILE_INFO_GET_LOCATION)
+# undef HAVE_CAJA_FILE_INFO_GET_LOCATION
+# define HAVE_CAJA_FILE_INFO_GET_LOCATION 1
 
 #include <gio/gio.h>
-#include <libnautilus-extension/nautilus-file-info.h>
+#include <libcaja-extension/caja-file-info.h>
 
 static GFile *
-nautilus_file_info_get_location (NautilusFileInfo *nfi)
+caja_file_info_get_location (CajaFileInfo *cfi)
 {
   GFile *file;
   gchar *uri;
-  
-  uri = nautilus_file_info_get_uri (nfi);
+
+  uri = caja_file_info_get_uri (cfi);
   file = g_file_new_for_uri (uri);
   g_free (uri);
-  
+
   return file;
 }
 
-/* 
+/*
  * Workaround for the buggy behavior of g_file_get_path() on the GFile returned
- * by our nautilus_file_info_get_location().
+ * by our caja_file_info_get_location().
  * Should be harmless in general, and at least for us.
- * 
+ *
  * The buggy behavior made g_file_get_path() return the remote path for remote
  * locations, such as "/foo" for "ftp://name.domain.tld/foo", obviously leading
  * to really bad things such as unexpected data loss (by using a local file when
  * the user thinks we use the remote one).
  */
 static gchar *
-NAUTILUS_WIPE_g_file_get_path (GFile *file)
+CAJA_WIPE_g_file_get_path (GFile *file)
 {
   gchar *path = NULL;
-  
+
   if (g_file_has_uri_scheme (file, "file")) {
     path = g_file_get_path (file);
   }
-  
+
   return path;
 }
 /* overwrite the GIO implementation */
-#define g_file_get_path NAUTILUS_WIPE_g_file_get_path
+#define g_file_get_path CAJA_WIPE_g_file_get_path
 
-#endif /* HAVE_NAUTILUS_FILE_INFO_GET_LOCATION */
+#endif /* HAVE_CAJA_FILE_INFO_GET_LOCATION */
 
 
 G_END_DECLS

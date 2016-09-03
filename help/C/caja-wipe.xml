@@ -5,7 +5,7 @@
   <!ENTITY appversion "0.1">
   <!ENTITY manrevision "0.1">
   <!ENTITY date "April 2011">
-  <!ENTITY appname "Nautilus Wipe">
+  <!ENTITY appname "Caja Wipe">
   <!ENTITY app "<application>&appname;</application>">
   <!-- Information about the entities
        The legal.xml file contains legal information, there is no need to edit the file.
@@ -30,12 +30,12 @@
 
     <abstract role="description">
       <para>&app; allows you to wipe files or available diskspace from
-      <application>Nautilus</application></para>
+      <application>Caja</application></para>
     </abstract>
 
     <copyright>
-      <year>2010</year>
-      <holder>The Nautilus Wipe Team</holder>
+      <year>2016</year>
+      <holder>The Caja Wipe Team</holder>
     </copyright>
 <!-- translators: uncomment this:
 
@@ -60,7 +60,7 @@
     <authorgroup>
       <!-- XXX -->
       <author role="maintainer">
-        <firstname>The Nautilus Wipe Team</firstname>
+        <firstname>The Caja Wipe Team</firstname>
         <!--
         <surname>Writer 2</surname>
         <affiliation>
@@ -139,7 +139,7 @@
       </revision>
     </revhistory>
 
-    <releaseinfo>This manual describes version &appversion; of Nautilus Wipe
+    <releaseinfo>This manual describes version &appversion; of Caja Wipe
     </releaseinfo>
     <legalnotice>
       <title>Feedback</title>
@@ -153,21 +153,21 @@
   </articleinfo>
 
   <indexterm zone="index">
-    <primary>Nautilus Wipe</primary>
+    <primary>Caja Wipe</primary>
   </indexterm>
   <indexterm zone="index">
-    <primary>nautilus-wipe</primary>
+    <primary>caja-wipe</primary>
   </indexterm>
 
 <!-- ============= Document Body ============================= -->
 <!-- ============= Introduction ============================== -->
 <!-- Use the Introduction section to give a brief overview of what
      the application is and what it does. -->
-  <sect1 id="nautilus-wipe-overview">
+  <sect1 id="caja-wipe-overview">
     <title>Overview</title>
     <para>
       &app; allows you to wipe files or
-      available diskspace from <application>Nautilus</application>.
+      available diskspace from <application>Caja</application>.
     </para>
     <para>
       Usually when you delete a file, even when bypassing the trash, it is
@@ -177,7 +177,7 @@
     </para>
     <para>
       &app; enables you to wipe files
-      and available disk space from <application>Nautilus</application> using the
+      and available disk space from <application>Caja</application> using the
       <application>secure-delete</application> program written by van Hauser /
       THC
         <footnote>
@@ -192,9 +192,9 @@
     </para>
   </sect1>
 
-  <sect1 id="nautilus-wipe-data-deletion-intro">
+  <sect1 id="caja-wipe-data-deletion-intro">
     <title>An introduction to data deletion</title>
-    <sect2 id="nautilus-wipe-not-the-data">
+    <sect2 id="caja-wipe-not-the-data">
       <title>Deletion doesn't affect data</title>
       <para>
         When you delete a file, even when bypassing or emptying the trash,
@@ -212,7 +212,7 @@
         numerous software.
       </para>
     </sect2>
-    <sect2 id="nautilus-wipe-an-answer">
+    <sect2 id="caja-wipe-an-answer">
       <title>An answer: overwriting data several times</title>
       <para>
         If you want to make the content of a file really hard to recover,
@@ -239,7 +239,7 @@
         free space of a storage medium.
       </para>
     </sect2>
-    <sect2 id="nautilus-wipe-limitations">
+    <sect2 id="caja-wipe-limitations">
       <title>Limitations</title>
       <para>
         This section is quite technical. In a nutshell, there's a lot of
@@ -293,8 +293,8 @@
     <sect2>
       <title>The wipe algorithm</title>
       <para>
-        nautilus-wipe enables you to wipe files and free disk
-        space from <application>Nautilus</application> using the
+        caja-wipe enables you to wipe files and free disk
+        space from <application>Caja</application> using the
         <application>secure-delete</application> program written by van Hauser /
         THC
         <footnote>
@@ -339,11 +339,11 @@
     </sect2>
   </sect1>
 
-  <sect1 id="nautilus-wipe-usage">
+  <sect1 id="caja-wipe-usage">
     <title>Using &app;</title>
-    <sect2 id="nautilus-wipe-start">
+    <sect2 id="caja-wipe-start">
       <title>Launching &app;</title>
-      <sect3 id="nautilus-wipe-wipe">
+      <sect3 id="caja-wipe-wipe">
         <title>Wiping file(s) or directory(es)</title>
         <para>
           Select the file(s) you want to wipe, and right-click on them. If
@@ -351,7 +351,7 @@
           there will be a <guimenuitem>Wipe</guimenuitem> entry in the context menu.
         </para>
       </sect3>
-      <sect3 id="nautilus-wipe-fill">
+      <sect3 id="caja-wipe-fill">
         <title>Wiping available diskspace on storage media</title>
         <para>
           Select a file or a directory which is on the partition on which you
@@ -362,15 +362,15 @@
         </para>
       </sect3>
     </sect2>
-    <sect2 id="nautilus-wipe-confirmation-dialog">
+    <sect2 id="caja-wipe-confirmation-dialog">
       <title>The confirmation dialog</title>
       <para>
         Once you click a menu item, a confirmation dialog will appear,
         where you can confirm or abort the wipe, and choose options (see
-        <xref linkend="nautilus-wipe-config" />).
+        <xref linkend="caja-wipe-config" />).
       </para>
     </sect2>
-    <sect2 id="nautilus-wipe-progress-dialog">
+    <sect2 id="caja-wipe-progress-dialog">
       <title>The progress dialog</title>
       <para>
         If you confirm the wipe, a dialog will appear to let you see the
@@ -389,15 +389,15 @@
       </para>
     </sect2>
   </sect1>
-  <sect1 id="nautilus-wipe-config">
+  <sect1 id="caja-wipe-config">
     <title>Configuring &app;</title>
     <para>
       In the confirmation dialog, you can click on the arrow left to the
       <guilabel>Options</guilabel> word to display options. To understand these
       options, you must have a good overview of the wipe process. If it's
-      not already the case, please read <xref linkend="nautilus-wipe-data-deletion-intro" />.
+      not already the case, please read <xref linkend="caja-wipe-data-deletion-intro" />.
     </para>
-    <sect2 id="nautilus-wipe-passes">
+    <sect2 id="caja-wipe-passes">
       <title>Number of passes</title>
       <para>
         You can configure the number of times that the data to be wiped is
@@ -441,7 +441,7 @@
         </varlistentry>
       </variablelist>
     </sect2>
-    <sect2 id="nautilus-wipe-fast-mode">
+    <sect2 id="caja-wipe-fast-mode">
       <title>Fast and insecure mode (no /dev/urandom, no synchronize mode)</title>
       <para>
         Fastens the wipe at the expense of security:
@@ -460,7 +460,7 @@
         </listitem>
       </itemizedlist>
     </sect2>
-    <sect2 id="nautilus-wipe-zeros">
+    <sect2 id="caja-wipe-zeros">
       <title>Last pass with zeros instead of random data</title>
       <para>
         Use zeros for the last overwrite, which is the data that will be
@@ -486,9 +486,10 @@
       the program. However, if you do wish to include this info in the
       manual, this is the place to put it. Alternatively, you can put this
       information in the title page.-->
-  <sect1 id="nautilus-wipe-about">
+  <sect1 id="caja-wipe-about">
     <title>About &app;</title>
-    <para> &app; was written by The Nautilus Wipe Team
+    <para> &app; was originally written by The Nautilus Wipe Team and forked to
+           Caja by the Caja Wipe Team.
       <!-- XXX
       (<email>hacker@gnome.org</email>). To find more information about
       &app;, please visit the
